@@ -1,0 +1,11 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&family=Rubik:ital,wght@0,300..900;1,300..900&family=Savate:ital,wght@0,200..900;1,200..900&display=swap');
+
+
+@theme {
+  --font-roboto: Roboto, "sans-serif";
+  --font-rubik: Rubik, "sans-serif";
+  --font-savate: Savate, "sans-serif";
+}
+
+@import "tailwindcss";
