@@ -35,6 +35,7 @@ const userSlice = createSlice({
     setLanguage: (state, action)=>{
       state.language = action.payload;
     },
+    
     setWarningMessage: (state, action)=>{
       state.warningMessage = action.payload;
     },
