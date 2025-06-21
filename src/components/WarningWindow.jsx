@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { setLoginStatus } from '../store/userSlice';
 
 export default function WarningWindow({ onContinue, onLogout, themeClasses, cardClasses, inputClasses }) {
   const [countdown, setCountdown] = useState(30);
   const navigate = useNavigate()
+  const dispatch = useDispatch()
   const { t } = useTranslation();
 
   const warningMessage = useSelector((state) => state.user.warningMessage)
@@ -13,6 +15,7 @@ export default function WarningWindow({ onContinue, onLogout, themeClasses, card
     if (countdown <= 0) {
       if (onLogout){
          onLogout();
+         dispatch(setLoginStatus(false))
          navigate('/timeout')
       }
       return;

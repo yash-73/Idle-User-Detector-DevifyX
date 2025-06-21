@@ -1,60 +1,60 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Clock, CirclePause, CirclePlay, Moon, Sun } from 'lucide-react';
-
-
-
+import { useTranslation } from 'react-i18next';
+import {setTimeoutDuration, toggleSound, toggleDarkMode, setLoginStatus,} from './store/userSlice';
 
 import notification_sound from './assets/notification_sound.wav'
 
 import UserSettings from './components/UserSettings'
 import WarningWindow from './components/WarningWindow'
-
-
-import { useTranslation } from 'react-i18next';
+import LoggedOut from './components/LoggedOut';
 import './i18n';
 
-
-
-
-import {
-  setTimeoutDuration,
-  toggleSound,
-  toggleDarkMode,
-  setLoginStatus,
-} from './store/userSlice';
-import LoggedOut from './components/LoggedOut';
 
 function App() {
   const dispatch = useDispatch();
 
  
   const { t, i18n } = useTranslation();
-  const language = useSelector((state) => state.user.language);
-  
 
+  //global states 
+  const language = useSelector((state) => state.user.language);
   const timeoutDuration = useSelector((state) => state.user.timeoutDuration);
   const soundEnabled = useSelector((state) => state.user.soundEnabled);
   const darkMode = useSelector((state) => state.user.darkMode);
   const loginStatus =useSelector((state)=> state.user.loginStatus);
   
+  //for rendering warning prompt
   const [warningWindow, setWarningWindow] = useState(false);
+
+  //to stop the timer 
   const [stopListener, setStopListener] = useState(false);
   
+  //to record last known activity
   const [lastActivity, setLastActivity] = useState(new Date(Date.now()));
+
   const [openSettings, setOpenSettings] = useState(true);
+
+  //to render how much time is left before warning window pops up
   const [passTime, setPassTime] = useState(timeoutDuration * 60);
 
+  //to refer to the timer function
   const intervalRef = useRef(null);
 
+  //events that can be considered as activity
   const events = ['mousedown', 'mousemove', 'keypress', 'scroll', 'touchstart', 'click'];
 
+
+  //extracting hours, minutes and seconds for displaying last activity time
   const lastActTime = {
     hours: lastActivity.getHours().toString().padStart(2, '0'),
     minutes: lastActivity.getMinutes().toString().padStart(2, '0'),
     seconds: lastActivity.getSeconds().toString().padStart(2, '0'),
   };
 
+
+  //css for dark and light mode
    const themeClasses = darkMode 
     ? 'bg-gray-900 text-white' 
     : 'bg-gray-200 text-gray-900';
@@ -68,6 +68,7 @@ function App() {
     : 'bg-white border-gray-300 text-gray-900';
 
    
+  //Timer function
   const startInterval = useCallback(() => {
     clearInterval(intervalRef.current);
     intervalRef.current = setInterval(() => {
@@ -82,11 +83,14 @@ function App() {
     }, 1000);
   }, []);
 
+  //Function to stop timer
   const stopInterval = useCallback(() => {
     setStopListener(true);
     clearInterval(intervalRef.current);
   }, []);
 
+
+  //reset the timer when any activity is encountered
   const resetTimer = useCallback(() => {
     const seconds = timeoutDuration * 60;
     setPassTime(seconds);
@@ -95,18 +99,22 @@ function App() {
     startInterval();
   }, [timeoutDuration, startInterval]);
 
+
+
   const handleActivity = useCallback(() => {
     if (!stopListener) {
       resetTimer();
     }
   }, [stopListener, resetTimer]);
 
+
   const resumeDetection = useCallback(() => {
     setStopListener(false);
     startInterval();
   }, [startInterval]);
 
- 
+  
+  
   const handleTimeoutChange = useCallback((newDuration) => {
     dispatch(setTimeoutDuration(newDuration));
     setPassTime(newDuration * 60);
@@ -133,6 +141,7 @@ function App() {
   }, [timeoutDuration]);
 
 
+  //listen to each event for activity
   useEffect(() => {
     if (!stopListener) {
       events.forEach(event => {
@@ -154,6 +163,7 @@ function App() {
     };
   }, [handleActivity, startInterval, stopListener]);
 
+  //Play alert sound as warning window pops up
 useEffect(()=>{
   if (warningWindow && soundEnabled) {
             const audio = new Audio(notification_sound);
@@ -162,6 +172,7 @@ useEffect(()=>{
 },[warningWindow, soundEnabled])
 
 
+//apply persisted language 
 useEffect(() => {
   if (language === 'Hindi') {
     i18n.changeLanguage('hi');
