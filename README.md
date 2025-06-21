@@ -34,26 +34,26 @@ A responsive, accessible React.js application for detecting and handling idle (i
 
 Home Page
 
-   ![Main Page](<Screenshot 2025-06-21 130513.png>)
+   ![Main Page](<public/screenshots/Screenshot 2025-06-21 130513.png>)
 > 
 
    Settings
 
-![Settings](<Screenshot 2025-06-21 130552.png>)
+![Settings](<public/screenshots/Screenshot 2025-06-21 130552.png>)
 
    Warning Window
 
-![Warning Window](<Screenshot 2025-06-21 130629.png>)
+![Warning Window](<public/screenshots/Screenshot 2025-06-21 130629.png>)
 
 
    Logout Message
 
-![Logout Message](<Screenshot 2025-06-21 130728.png>)
+![Logout Message](<public/screenshots/Screenshot 2025-06-21 130728.png>)
 
 
    State Management
 
-![State Management]({02FB440F-7FAF-43A1-95C6-3B32A874DDC5}.png)
+![State Management]({public/screenshots/02FB440F-7FAF-43A1-95C6-3B32A874DDC5}.png)
 
 ## 🛠️ Setup Instructions
 
