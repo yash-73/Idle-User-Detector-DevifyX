@@ -1,5 +1,7 @@
 # Idle User Detector
 
+[Live Demo](https://idle-detector.vercel.app/)
+
 A responsive, accessible React.js application for detecting and handling idle (inactive) users. This project demonstrates advanced React component design, state management, and user experience best practices—all without any backend functionality.
 
 ## 🚀 Features
@@ -53,7 +55,7 @@ Home Page
 
    State Management
 
-![State Management]({public/screenshots/02FB440F-7FAF-43A1-95C6-3B32A874DDC5}.png)
+![State Management](public/screenshots/{02FB440F-7FAF-43A1-95C6-3B32A874DDC5}.png)
 
 ## 🛠️ Setup Instructions
 
@@ -72,6 +74,8 @@ Home Page
    ```
 4. **Open your browser:**
    Visit [http://localhost:5173](http://localhost:5173) (or the port shown in your terminal).
+
+
 
 ## 🌐 Localization
 - Change language between English and Hindi in the Settings panel.
